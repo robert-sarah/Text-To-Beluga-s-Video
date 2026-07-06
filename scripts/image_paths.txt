@@ -1,0 +1,104 @@
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/001.png'
+outpoint 1.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/002.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/003.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/004.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/005.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/006.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/007.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/008.png'
+outpoint 1.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/009.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/010.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/011.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/012.png'
+outpoint 2.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/013.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/014.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/015.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/016.png'
+outpoint 1.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/017.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/018.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/019.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/020.png'
+outpoint 1.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/021.png'
+outpoint 2.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/022.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/023.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/024.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/025.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/026.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/027.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/028.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/029.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/030.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/031.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/032.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/033.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/034.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/035.png'
+outpoint 1.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/036.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/037.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/038.png'
+outpoint 1
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/039.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/040.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/041.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/042.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/043.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/044.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/045.png'
+outpoint 1.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/046.png'
+outpoint 1.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/047.png'
+outpoint 0.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/048.png'
+outpoint 1.5
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/049.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/050.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/051.png'
+outpoint 2
+file 'C:/Users/GENIUS ELECTRONICS/Downloads/Text-2-Beluga/chat/052.png'
+outpoint 1.5
