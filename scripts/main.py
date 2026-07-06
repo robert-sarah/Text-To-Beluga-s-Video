@@ -109,16 +109,47 @@ def run_generate_chat(stdscr):
     # Step 2: Compiling Video
     draw_screen(stdscr, "Compiling Video...", "Compiling images into video. Please wait...\n\n", menu_items=[])
     stdscr.refresh()
-    gen_vid(filename)  # Note: gen_vid internally calls add_sounds as needed.
+    try:
+        gen_vid(filename)  # Note: gen_vid internally calls add_sounds as needed.
+    except Exception as e:
+        # Show error to user and return to menu
+        draw_screen(stdscr, "Error", f"Video generation failed: {e}\nPress Enter to return to the main menu...\n\n", menu_items=[])
+        stdscr.getch()
+        return
 
-    # Final message.
-    final_message = (
-        "Your Beluga-like video has been generated successfully.\n"
-        f"Saved to: {FINAL_VIDEO_PATH}\n"
-        "Press Enter to return to the main menu...\n\n"
-    )
+    # Verify final video exists
+    if os.path.isfile(FINAL_VIDEO_PATH):
+        final_message = (
+            "Your Beluga-like video has been generated successfully.\n"
+            f"Saved to: {FINAL_VIDEO_PATH}\n"
+            "Press Enter to return to the main menu...\n\n"
+        )
+    else:
+        # If final file not found, try to detect any intermediate output and report it
+        alt_msg = "Generation completed but final file not found."
+        possible_output = os.path.normpath(os.path.join(BASE_DIR, '..', 'output.mp4'))
+        if os.path.isfile(possible_output):
+            alt_msg += f" An intermediate output was written to: {possible_output}\n"
+        alt_msg += "Please check logs or rerun the generation.\n"
+        final_message = alt_msg + "\nPress Enter to return to the main menu...\n\n"
+
     draw_screen(stdscr, "Completed!", final_message, menu_items=[])
     stdscr.getch()
+
+    # Post-generation cleanup: remove chat frames to conserve space
+    try:
+        if os.path.exists(CHAT_DIR):
+            for file in os.listdir(CHAT_DIR):
+                try:
+                    os.remove(os.path.join(CHAT_DIR, file))
+                except Exception:
+                    pass
+            try:
+                os.rmdir(CHAT_DIR)
+            except Exception:
+                pass
+    except Exception:
+        pass
 
 
 def run_validate_script(stdscr):

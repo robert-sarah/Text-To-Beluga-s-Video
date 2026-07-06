@@ -10,15 +10,25 @@
 ----------------------------------------------------
 
 # (TRY) TODO
-- allow for strikethrough message text
-- ability to add background music
 - AI powered chat script creator
-- support for links (URLs)
 - Text2Beluga discord bot
-- improve script_validator.py
 
 ----------------------------------------------------
 
-# MAYBE
+# IN PROGRESS
+- Effects/animations: experimental support added for `fade-in` and `typewriter` (more to come)
+
+----------------------------------------------------
+
+# DONE (RECENT)
+- allow for strikethrough message text
+- ability to add background music
+- support for links (URLs)
+- improve script_validator.py
 - "User is typing..." indicator
-- effects/animations such as fade-in, typewriter effect, shake, zoom-in, etc
+
+----------------------------------------------------
+
+# NOTES
+- The generator writes intermediate PNG frames to the `chat/` directory and produces a temporary `output.mp4` with ffmpeg. The final output is `final_video.mp4` in the repository root.
+- Animations are implemented by producing multiple frames per message; this increases output size but is simple and cross-platform. Consider moving heavy effects into ffmpeg filters later.

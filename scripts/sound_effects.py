@@ -1,6 +1,7 @@
 import os
 import re
 from moviepy.editor import VideoFileClip, AudioFileClip, CompositeAudioClip
+from moviepy.audio.fx.all import audio_loop
 
 SOUND_DIR = os.path.join('..', 'assets', 'sounds', 'mp3')
 
@@ -102,10 +103,16 @@ def add_sounds(filename, output_video=None, final_video=None):
             current_time += float(duration_meta.split('#!')[0].strip())
 
     if bgm_clip is not None:
+        # Ensure bgm covers the whole video: loop if shorter, trim if longer
+        if bgm_clip.duration < video_duration:
+            bgm_clip = audio_loop(bgm_clip, duration=video_duration).volumex(0.65)
+        else:
+            bgm_clip = bgm_clip.subclip(0, video_duration).volumex(0.65)
+        bgm_clip = bgm_clip.set_start(0)
         audio_clips.append(bgm_clip)
 
     if audio_clips:
-        composite_audio = CompositeAudioClip(audio_clips)
+        composite_audio = CompositeAudioClip(audio_clips).set_duration(video_duration)
         video = video.set_audio(composite_audio)
 
     video.write_videofile(final_video, codec="libx264", audio_codec="aac")

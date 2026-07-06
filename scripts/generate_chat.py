@@ -443,6 +443,31 @@ def save_images(lines, init_time, dt=30):
                 frame = Image.blend(blank, template_img, alpha)
                 frame.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
                 msg_number += 1
+                
+                
+        elif anim in ('shake',):
+            # simple horizontal shake: small offsets left/right
+            frames = max(4, min(12, int(dt/0.1)))
+            amp = 12
+            for i in range(frames):
+                dx = int(((i % 2) * 2 - 1) * amp * (1 - i / frames))
+                frame = Image.new('RGBA', template_img.size, WORLD_COLOR)
+                frame.paste(template_img, (dx, 0), template_img)
+                frame.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+                msg_number += 1
+        elif anim in ('zoom-in', 'zoom_in', 'zoom'):
+            # simple zoom-in effect by scaling up and cropping center
+            frames = max(4, min(12, int(dt/0.12)))
+            w, h = template_img.size
+            for i in range(frames):
+                scale = 1.0 + 0.08 * ((i + 1) / frames)
+                nw, nh = int(w * scale), int(h * scale)
+                resized = template_img.resize((nw, nh), Image.LANCZOS)
+                left = (nw - w) // 2
+                top = (nh - h) // 2
+                frame = resized.crop((left, top, left + w, top + h))
+                frame.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+                msg_number += 1
         elif anim and 'typewriter' in anim:
             w = template_img.width
             steps = max(4, min(12, int(dt/0.15)))
@@ -452,6 +477,27 @@ def save_images(lines, init_time, dt=30):
                 mask = Image.new('L', template_img.size, 0)
                 ImageDraw.Draw(mask).rectangle((0, 0, reveal_w, template_img.height), fill=255)
                 frame = Image.composite(template_img, blank, mask)
+                frame.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+                msg_number += 1
+        elif anim in ('shake',):
+            frames = max(4, min(12, int(dt/0.1)))
+            amp = 12
+            for i in range(frames):
+                dx = int(((i % 2) * 2 - 1) * amp * (1 - i / frames))
+                frame = Image.new('RGBA', template_img.size, WORLD_COLOR)
+                frame.paste(template_img, (dx, 0), template_img)
+                frame.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+                msg_number += 1
+        elif anim in ('zoom-in', 'zoom_in', 'zoom'):
+            frames = max(4, min(12, int(dt/0.12)))
+            w, h = template_img.size
+            for i in range(frames):
+                scale = 1.0 + 0.08 * ((i + 1) / frames)
+                nw, nh = int(w * scale), int(h * scale)
+                resized = template_img.resize((nw, nh), Image.LANCZOS)
+                left = (nw - w) // 2
+                top = (nh - h) // 2
+                frame = resized.crop((left, top, left + w, top + h))
                 frame.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
                 msg_number += 1
         else:
