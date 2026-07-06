@@ -49,12 +49,23 @@ def gen_vid(filename):
         file.write(f"file '{last_image_path}'\noutpoint 0.04\n")
 
     video_width, video_height = 1280, 720
+    # Build ffmpeg command and run it, checking for success
     ffmpeg_cmd = (
-        f"ffmpeg -f concat -safe 0 -i {IMAGE_LIST_FILE} -vcodec libx264 -r 25 -crf 25 "
+        f"ffmpeg -f concat -safe 0 -i \"{IMAGE_LIST_FILE}\" -vcodec libx264 -r 25 -crf 25 "
         f"-vf \"scale={video_width}:{video_height}:force_original_aspect_ratio=decrease,"
-        f"pad={video_width}:{video_height}:(ow-iw)/2:(oh-ih)/2\" -pix_fmt yuv420p {OUTPUT_VIDEO}"
+        f"pad={video_width}:{video_height}:(ow-iw)/2:(oh-ih)/2\" -pix_fmt yuv420p \"{OUTPUT_VIDEO}\""
     )
-    os.system(ffmpeg_cmd)
-    os.remove(IMAGE_LIST_FILE)
+    import subprocess
+    proc = subprocess.run(ffmpeg_cmd, shell=True)
+    # remove the temporary image list file
+    try:
+        os.remove(IMAGE_LIST_FILE)
+    except Exception:
+        pass
+
+    # Only proceed to add sounds if ffmpeg produced the expected output file
+    if not os.path.isfile(OUTPUT_VIDEO):
+        print(f"Error: expected output video not found at {OUTPUT_VIDEO}. ffmpeg returncode={proc.returncode}")
+        return
 
     add_sounds(filename, output_video=OUTPUT_VIDEO, final_video=FINAL_VIDEO_PATH)

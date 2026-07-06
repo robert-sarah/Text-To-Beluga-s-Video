@@ -4,6 +4,9 @@ from moviepy.editor import VideoFileClip, AudioFileClip, CompositeAudioClip
 
 SOUND_DIR = os.path.join('..', 'assets', 'sounds', 'mp3')
 
+BASE_DIR = os.path.dirname(__file__)
+SOUND_DIR = os.path.normpath(os.path.join(BASE_DIR, '..', 'assets', 'sounds', 'mp3'))
+
 
 def _normalize_sound_name(sound_name):
     if not sound_name:
@@ -31,8 +34,12 @@ def _sound_path(sound_name):
     return os.path.join(SOUND_DIR, f"{sound_name}.mp3")
 
 
-def add_sounds(filename):
-    video = VideoFileClip("output.mp4")
+def add_sounds(filename, output_video=None, final_video=None):
+    if output_video is None:
+        output_video = os.path.normpath(os.path.join(BASE_DIR, '..', 'output.mp4'))
+    if final_video is None:
+        final_video = os.path.normpath(os.path.join(BASE_DIR, '..', 'final_video.mp4'))
+    video = VideoFileClip(output_video)
     video_duration = video.duration
     audio_clips = []
     bgm_clip = None
@@ -101,5 +108,11 @@ def add_sounds(filename):
         composite_audio = CompositeAudioClip(audio_clips)
         video = video.set_audio(composite_audio)
 
-    video.write_videofile("../final_video.mp4", codec="libx264", audio_codec="aac")
-    os.remove("output.mp4")
+    video.write_videofile(final_video, codec="libx264", audio_codec="aac")
+    # remove the intermediate output file created by ffmpeg (output_video path passed from caller)
+    try:
+        if os.path.isfile(output_video):
+            os.remove(output_video)
+    except Exception:
+        # best-effort cleanup; ignore failures
+        pass
