@@ -22,37 +22,46 @@ except ImportError:
 def draw_screen(stdscr, header, description, menu_items=None, current_row=None, left_margin=4):
     stdscr.clear()
     height, width = stdscr.getmaxyx()
+    max_line = max(1, width - left_margin - 4)
 
     # Draw header using pyfiglet.
     header_text = figlet_format(header)
     header_lines = header_text.splitlines()
     y = 1
     for line in header_lines:
+        if y >= height - 1:
+            break
         stdscr.attron(curses.color_pair(1))
-        stdscr.addstr(y, left_margin, line[:width - left_margin - 4])
+        stdscr.addstr(y, left_margin, line[:max_line])
         stdscr.attroff(curses.color_pair(1))
         y += 1
 
     # Wrap description text to fit the width with left margin = right margin = 4.
-    desc_width = width - left_margin * 2
+    desc_width = max(10, width - left_margin * 2)
     wrapped_desc = textwrap.fill(description, width=desc_width)
     for line in wrapped_desc.splitlines():
+        if y >= height - 1:
+            break
         stdscr.attron(curses.color_pair(3))
-        stdscr.addstr(y, left_margin, line)
+        stdscr.addstr(y, left_margin, line[:max_line])
         stdscr.attroff(curses.color_pair(3))
         y += 1
 
     # If a menu is provided, render it.
     if menu_items is not None:
-        y += 1
+        if y < height - 1:
+            y += 1
         for idx, item in enumerate(menu_items):
+            if y >= height - 1:
+                break
+            text = f"> {item}" if idx == current_row else f"  {item}"
             if idx == current_row:
                 stdscr.attron(curses.color_pair(2))
-                stdscr.addstr(y, left_margin, f"> {item}")
+                stdscr.addstr(y, left_margin, text[:max_line])
                 stdscr.attroff(curses.color_pair(2))
             else:
                 stdscr.attron(curses.color_pair(3))
-                stdscr.addstr(y, left_margin, f"  {item}")
+                stdscr.addstr(y, left_margin, text[:max_line])
                 stdscr.attroff(curses.color_pair(3))
             y += 1
 

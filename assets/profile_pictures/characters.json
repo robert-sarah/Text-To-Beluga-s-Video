@@ -22,5 +22,45 @@
     "Cheddar": {
         "profile_pic": "perm/cheddar.png",
         "role_color": "#ff7878"
+    },
+    "ChatGPT": {
+        "profile_pic": "perm/chatgpt.jpg",
+        "role_color": "#19c37d"
+    },
+    "Claude": {
+        "profile_pic": "perm/claude.png",
+        "role_color": "#d97757"
+    },
+    "Grok": {
+        "profile_pic": "perm/grok.jpg",
+        "role_color": "#1a1a1a"
+    },
+    "Gemini": {
+        "profile_pic": "perm/gemini.jpg",
+        "role_color": "#4285f4"
+    },
+    "Samuel": {
+        "profile_pic": "perm/samuel.jpg",
+        "role_color": "#ff9f1c"
+    },
+    "Bob": {
+        "profile_pic": "perm/bob.jpg",
+        "role_color": "#2ec4b6"
+    },
+    "Alex": {
+        "profile_pic": "perm/alex.jpg",
+        "role_color": "#e71d36"
+    },
+    "Kevin": {
+        "profile_pic": "perm/kevin.jpg",
+        "role_color": "#8338ec"
+    },
+    "Sophie": {
+        "profile_pic": "perm/sophie.jpg",
+        "role_color": "#fb5607"
+    },
+    "Gunther": {
+        "profile_pic": "perm/gunther.png",
+        "role_color": "#3a86ff"
     }
 }
