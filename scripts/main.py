@@ -5,6 +5,10 @@ import textwrap
 import os
 from playsound import playsound
 
+BASE_DIR = os.path.dirname(__file__)
+CHAT_DIR = os.path.normpath(os.path.join(BASE_DIR, '..', 'chat'))
+FINAL_VIDEO_PATH = os.path.normpath(os.path.join(BASE_DIR, '..', 'final_video.mp4'))
+
 # Import functions directly from the modules.
 from generate_chat import get_filename as get_chat_filename, save_images
 from compile_images import gen_vid
@@ -74,13 +78,12 @@ def run_generate_chat(stdscr):
     draw_screen(stdscr, "Text 2 Beluga", "Select a chat script file...\n\n", menu_items=[])
     curses.napms(500)
     
-    final_video = '../final_video.mp4'
-    if os.path.isfile(final_video):
-        os.remove(final_video)
-    if os.path.exists('../chat'):
-        for file in os.listdir('../chat'):
-            os.remove(os.path.join('../chat', file))
-        os.rmdir('../chat')
+    if os.path.isfile(FINAL_VIDEO_PATH):
+        os.remove(FINAL_VIDEO_PATH)
+    if os.path.exists(CHAT_DIR):
+        for file in os.listdir(CHAT_DIR):
+            os.remove(os.path.join(CHAT_DIR, file))
+        os.rmdir(CHAT_DIR)
 
     filename = get_chat_filename()
     if not filename:
@@ -109,7 +112,12 @@ def run_generate_chat(stdscr):
     gen_vid(filename)  # Note: gen_vid internally calls add_sounds as needed.
 
     # Final message.
-    draw_screen(stdscr, "Completed!", "Your Beluga-like video has been generated. Enjoy :)\nPress Enter to return to the main menu...\n\n", menu_items=[])
+    final_message = (
+        "Your Beluga-like video has been generated successfully.\n"
+        f"Saved to: {FINAL_VIDEO_PATH}\n"
+        "Press Enter to return to the main menu...\n\n"
+    )
+    draw_screen(stdscr, "Completed!", final_message, menu_items=[])
     stdscr.getch()
 
 
