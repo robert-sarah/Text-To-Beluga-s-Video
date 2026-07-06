@@ -142,12 +142,13 @@ def generate_chat(messages, name_time, profpic_file, color):
     draw_template.text(time_position, time_text, TIME_FONT_COLOR, font=time_font)
 
     y_offset = 0
-    for i, message in enumerate(messages):
+    for i, message in enumerate(visible_messages):
         message = message.strip()
         if not message:
             continue
 
-        x, base_y = MESSAGE_POSITIONS[i]
+        x = MESSAGE_X
+        base_y = MESSAGE_Y_INIT + i * MESSAGE_DY
         y_pos = base_y + y_offset
         current_x = x
 
