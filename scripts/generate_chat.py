@@ -75,6 +75,12 @@ message_mention_italic_font = ImageFont.truetype(os.path.join(FONT_DIR, font, 's
 with open(os.path.join(PROFILE_PICS_DIR, 'characters.json'), encoding="utf8") as file:
     characters_dict = json.load(file)
 
+# Default profile used when a character is not defined in characters.json
+DEFAULT_PROFILE = {
+    "profile_pic": os.path.join('perm', 'nerd.jpg'),
+    "role_color": NAME_FONT_COLOR,
+}
+
 
 def is_emoji_message(message):
     """Return True if the message contains only emoji characters."""
@@ -292,7 +298,7 @@ def generate_joined_message_stack(joined_messages, hour):
     
     for idx, key in enumerate(joined_messages):
         name = key.split(' ')[1].split('$^')[0]
-        color = characters_dict[name]["role_color"]
+        color = characters_dict.get(name, DEFAULT_PROFILE)["role_color"]
         time_str = f'{hour}:{joined_messages[key][2].minute:02d}'
         joined_img = generate_joined_message(name, time_str, joined_messages[key][0], joined_messages[key][1], color)
         template_img.paste(joined_img, (0, idx * WORLD_HEIGHT_JOINED))
@@ -354,8 +360,8 @@ def save_images(lines, init_time, dt=30):
                 image = generate_chat(
                     messages=current_lines,
                     name_time=name_time,
-                    profpic_file=os.path.join(PROFILE_PICS_DIR, characters_dict[current_name]["profile_pic"]),
-                    color=characters_dict[current_name]["role_color"]
+                        profpic_file=os.path.join(PROFILE_PICS_DIR, characters_dict.get(current_name, DEFAULT_PROFILE)["profile_pic"]),
+                        color=characters_dict.get(current_name, DEFAULT_PROFILE)["role_color"]
                 )
                 image.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
                 current_time += datetime.timedelta(seconds=dt)
@@ -380,8 +386,8 @@ def save_images(lines, init_time, dt=30):
         image = generate_chat(
             messages=current_lines,
             name_time=name_time,
-            profpic_file=os.path.join(PROFILE_PICS_DIR, characters_dict[current_name]["profile_pic"]),
-            color=characters_dict[current_name]["role_color"]
+            profpic_file=os.path.join(PROFILE_PICS_DIR, characters_dict.get(current_name, DEFAULT_PROFILE)["profile_pic"]),
+            color=characters_dict.get(current_name, DEFAULT_PROFILE)["role_color"]
         )
         image.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
         current_time += datetime.timedelta(seconds=dt)
