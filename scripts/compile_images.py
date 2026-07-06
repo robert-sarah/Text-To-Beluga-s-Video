@@ -3,6 +3,9 @@ from sound_effects import add_sounds
 
 BASE_DIR = os.path.dirname(__file__)
 CHAT_DIR = os.path.normpath(os.path.join(BASE_DIR, '..', 'chat'))
+OUTPUT_VIDEO = os.path.normpath(os.path.join(BASE_DIR, '..', 'output.mp4'))
+FINAL_VIDEO_PATH = os.path.normpath(os.path.join(BASE_DIR, '..', 'final_video.mp4'))
+IMAGE_LIST_FILE = os.path.join(BASE_DIR, 'image_paths.txt')
 
 
 def gen_vid(filename):
@@ -38,7 +41,7 @@ def gen_vid(filename):
                 
                 
     # Create a text file to store the image paths
-    with open('image_paths.txt', 'w') as file:    
+    with open(IMAGE_LIST_FILE, 'w') as file:    
         for count, image_file in enumerate(image_files):
             image_path = os.path.join(input_folder, image_file).replace('\\', '/')
             file.write(f"file '{image_path}'\noutpoint {durations[count]}\n")
@@ -47,11 +50,11 @@ def gen_vid(filename):
 
     video_width, video_height = 1280, 720
     ffmpeg_cmd = (
-        f"ffmpeg -f concat -safe 0 -i image_paths.txt -vcodec libx264 -r 25 -crf 25 "
+        f"ffmpeg -f concat -safe 0 -i {IMAGE_LIST_FILE} -vcodec libx264 -r 25 -crf 25 "
         f"-vf \"scale={video_width}:{video_height}:force_original_aspect_ratio=decrease,"
-        f"pad={video_width}:{video_height}:(ow-iw)/2:(oh-ih)/2\" -pix_fmt yuv420p output.mp4"
+        f"pad={video_width}:{video_height}:(ow-iw)/2:(oh-ih)/2\" -pix_fmt yuv420p {OUTPUT_VIDEO}"
     )
     os.system(ffmpeg_cmd)
-    os.remove('image_paths.txt')
+    os.remove(IMAGE_LIST_FILE)
 
-    add_sounds(filename)
+    add_sounds(filename, output_video=OUTPUT_VIDEO, final_video=FINAL_VIDEO_PATH)
