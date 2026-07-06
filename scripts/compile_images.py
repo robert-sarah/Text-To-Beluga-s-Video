@@ -1,8 +1,12 @@
 import os
 from sound_effects import add_sounds
 
+BASE_DIR = os.path.dirname(__file__)
+CHAT_DIR = os.path.normpath(os.path.join(BASE_DIR, '..', 'chat'))
+
+
 def gen_vid(filename):
-    input_folder = '../chat/'
+    input_folder = CHAT_DIR
     image_files = sorted([f for f in os.listdir(input_folder) if f.endswith('.png')])
 
     # Read durations from the file.
@@ -35,11 +39,11 @@ def gen_vid(filename):
                 
     # Create a text file to store the image paths
     with open('image_paths.txt', 'w') as file:    
-        count = 0
-        for image_file in image_files:
-            file.write(f"file '{input_folder}{image_file}'\noutpoint {durations[count]}\n")
-            count += 1
-        file.write(f"file '{input_folder}{image_files[-1]}'\noutpoint 0.04\n")
+        for count, image_file in enumerate(image_files):
+            image_path = os.path.join(input_folder, image_file).replace('\\', '/')
+            file.write(f"file '{image_path}'\noutpoint {durations[count]}\n")
+        last_image_path = os.path.join(input_folder, image_files[-1]).replace('\\', '/')
+        file.write(f"file '{last_image_path}'\noutpoint 0.04\n")
 
     video_width, video_height = 1280, 720
     ffmpeg_cmd = (
