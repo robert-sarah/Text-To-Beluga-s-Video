@@ -327,6 +327,13 @@ def save_images(lines, init_time, dt=30):
     joined_messages = {}
     name_time = []
 
+    # Parse script to extract per-message animations and durations
+    try:
+        parsed_events, _ = parse_script(lines)
+        events_queue = [e for e in parsed_events if e['type'] in ('message', 'welcome', 'typing')]
+    except Exception:
+        events_queue = []
+
     for line in lines:
         line = line.strip()
         if not line:
@@ -357,15 +364,45 @@ def save_images(lines, init_time, dt=30):
                 current_lines = ['typing...']
                 hour = current_time.hour % 12 or 12
                 name_time = [current_name, f'{hour}:{current_time.minute:02d}']
-                image = generate_chat(
+                template_img = generate_chat(
                     messages=current_lines,
                     name_time=name_time,
-                        profpic_file=os.path.join(PROFILE_PICS_DIR, characters_dict.get(current_name, DEFAULT_PROFILE)["profile_pic"]),
-                        color=characters_dict.get(current_name, DEFAULT_PROFILE)["role_color"]
+                    profpic_file=os.path.join(PROFILE_PICS_DIR, characters_dict.get(current_name, DEFAULT_PROFILE)["profile_pic"]),
+                    color=characters_dict.get(current_name, DEFAULT_PROFILE)["role_color"]
                 )
-                image.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+                # handle animation if specified in parsed events
+                anim = None
+                if events_queue:
+                    try:
+                        ev = events_queue.pop(0)
+                        anim = ev.get('animation')
+                    except Exception:
+                        anim = None
+
+                if anim == 'fade-in':
+                    frames = max(3, min(10, int(dt/0.2)))
+                    blank = Image.new('RGBA', template_img.size, WORLD_COLOR)
+                    for i in range(frames):
+                        alpha = (i + 1) / frames
+                        frame = Image.blend(blank, template_img, alpha)
+                        frame.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+                        msg_number += 1
+                elif anim and 'typewriter' in anim:
+                    # reveal left-to-right
+                    w = template_img.width
+                    steps = max(4, min(12, int(dt/0.15)))
+                    blank = Image.new('RGBA', template_img.size, WORLD_COLOR)
+                    for i in range(steps):
+                        reveal_w = int(w * (i + 1) / steps)
+                        mask = Image.new('L', template_img.size, 0)
+                        ImageDraw.Draw(mask).rectangle((0, 0, reveal_w, template_img.height), fill=255)
+                        frame = Image.composite(template_img, blank, mask)
+                        frame.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+                        msg_number += 1
+                else:
+                    template_img.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+                    msg_number += 1
                 current_time += datetime.timedelta(seconds=dt)
-                msg_number += 1
             continue
 
         if re.match(r'^(?:BGM|MUSIC)\s*[:\s]+', line, re.IGNORECASE):
@@ -383,15 +420,44 @@ def save_images(lines, init_time, dt=30):
 
         message_text = line.split('$^', 1)[0].rstrip()
         current_lines.append(message_text)
-        image = generate_chat(
+        template_img = generate_chat(
             messages=current_lines,
             name_time=name_time,
             profpic_file=os.path.join(PROFILE_PICS_DIR, characters_dict.get(current_name, DEFAULT_PROFILE)["profile_pic"]),
             color=characters_dict.get(current_name, DEFAULT_PROFILE)["role_color"]
         )
-        image.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+        # handle animation if specified
+        anim = None
+        if events_queue:
+            try:
+                ev = events_queue.pop(0)
+                anim = ev.get('animation')
+            except Exception:
+                anim = None
+
+        if anim == 'fade-in':
+            frames = max(3, min(10, int(dt/0.2)))
+            blank = Image.new('RGBA', template_img.size, WORLD_COLOR)
+            for i in range(frames):
+                alpha = (i + 1) / frames
+                frame = Image.blend(blank, template_img, alpha)
+                frame.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+                msg_number += 1
+        elif anim and 'typewriter' in anim:
+            w = template_img.width
+            steps = max(4, min(12, int(dt/0.15)))
+            blank = Image.new('RGBA', template_img.size, WORLD_COLOR)
+            for i in range(steps):
+                reveal_w = int(w * (i + 1) / steps)
+                mask = Image.new('L', template_img.size, 0)
+                ImageDraw.Draw(mask).rectangle((0, 0, reveal_w, template_img.height), fill=255)
+                frame = Image.composite(template_img, blank, mask)
+                frame.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+                msg_number += 1
+        else:
+            template_img.save(os.path.join(CHAT_DIR, f'{msg_number:03d}.png'))
+            msg_number += 1
         current_time += datetime.timedelta(seconds=dt)
-        msg_number += 1
 
 
 if __name__ == '__main__':
